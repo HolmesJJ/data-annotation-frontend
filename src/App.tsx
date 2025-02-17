@@ -7,7 +7,9 @@ import { AnnotationSection } from './types';
 
 const App: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
-  const [promptText, setPromptText] = useState("");
+  const [promptText, setPromptText] = useState<AnnotationSection[]>([
+    { originalText: "Original annotation text 1", editableText: "Second annotation text 1", isOriginalCollapsed: true, isEditableCollapsed: false },
+  ]);
 
   const [imageAnnotations, setImageAnnotations] = useState<AnnotationSection[]>([
     { originalText: "Original annotation text 1", editableText: "Second annotation text 1", isOriginalCollapsed: true, isEditableCollapsed: false },
@@ -20,21 +22,23 @@ const App: React.FC = () => {
 
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => setTabValue(newValue);
 
-  const toggleCollapse = (index: number, isImageAnnotation: boolean, isOriginal: boolean) => {
-    if (isImageAnnotation) {
-      setImageAnnotations((prev) =>
-        prev.map((item, i) =>
-          i === index ? { ...item, [isOriginal ? "isOriginalCollapsed" : "isEditableCollapsed"]: !item[isOriginal ? "isOriginalCollapsed" : "isEditableCollapsed"] } : item
-        )
+  const toggleCollapse = (index: number, type: string, isOriginal: boolean) => {
+    const key = isOriginal ? "isOriginalCollapsed" : "isEditableCollapsed";
+  
+    const updateAnnotations = (annotations: AnnotationSection[]) =>
+      annotations.map((item, i) =>
+        i === index ? { ...item, [key]: !item[key] } : item
       );
+  
+    if (type === "prompt") {
+      setPromptText((prev) => updateAnnotations(prev));
+    } else if (type === "image") {
+      setImageAnnotations((prev) => updateAnnotations(prev));
     } else {
-      setVideoAnnotations((prev) =>
-        prev.map((item, i) =>
-          i === index ? { ...item, [isOriginal ? "isOriginalCollapsed" : "isEditableCollapsed"]: !item[isOriginal ? "isOriginalCollapsed" : "isEditableCollapsed"] } : item
-        )
-      );
+      setVideoAnnotations((prev) => updateAnnotations(prev));
     }
   };
+  
 
   return (
     <Container maxWidth="lg" sx={{ mt: 0 }}>
@@ -74,14 +78,38 @@ const App: React.FC = () => {
         </TabPanel>
       </Box>
 
+      <br />
+
       <Box sx={{ 
         display: 'flex',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        gap: 2
       }}>
+        
+        {/* Question whether this is the standard way of coding  */}
+        <TabPanel value={tabValue} index={0}>
+          <Button onClick={() => setTabValue((prev) => (prev + 1))}
+            variant="contained" 
+            size="small"
+            sx={{ width: 100 }}
+          >
+            Next
+          </Button>
+        </TabPanel>
+
+        <TabPanel value={tabValue} index={1}>
+          <Button onClick={() => setTabValue((prev) => (prev - 1))}
+            variant="contained" 
+            size="small"
+            sx={{ width: 100 }}
+          >
+            Previous
+          </Button>
+        </TabPanel>
         <Button 
           variant="contained" 
           size="small"
-          sx={{ minWidth: 100 }} // Give button a minimum width
+          sx={{ width: 100}} 
         >
           Save
         </Button>

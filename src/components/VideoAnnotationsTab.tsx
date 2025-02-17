@@ -6,7 +6,7 @@ import { AnnotationSection } from '../types';
 interface VideoAnnotationsTabProps {
   videoAnnotations: AnnotationSection[];
   setVideoAnnotations: React.Dispatch<React.SetStateAction<AnnotationSection[]>>;
-  toggleCollapse: (index: number, isImageAnnotation: boolean, isOriginal: boolean) => void;
+  toggleCollapse: (index: number, type: string, isOriginal: boolean) => void;
 }
 
 export const VideoAnnotationsTab: React.FC<VideoAnnotationsTabProps> = ({
@@ -14,7 +14,8 @@ export const VideoAnnotationsTab: React.FC<VideoAnnotationsTabProps> = ({
   setVideoAnnotations,
   toggleCollapse
 }) => (
-  <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+  // change the fraction of the width
+  <Box sx={{ display: "grid", gridTemplateColumns: "0.8fr 1.2fr", gap: 2 }}>
     <Paper sx={{ p: 2, height: "250px", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <Typography color="text.secondary">Video Preview</Typography>
     </Paper>
@@ -25,8 +26,8 @@ export const VideoAnnotationsTab: React.FC<VideoAnnotationsTabProps> = ({
           key={index}
           annotation={annotation}
           index={index}
-          onToggleOriginal={() => toggleCollapse(index, false, false)}
-          onToggleEditable={() => toggleCollapse(index, false, true)}
+          onToggleOriginal={() => toggleCollapse(index, "video", true)}
+          onToggleEditable={() => toggleCollapse(index, "video", false)}
           label="Video Note"
           onChange={(text) =>
             setVideoAnnotations((prev) =>

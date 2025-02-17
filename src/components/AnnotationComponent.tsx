@@ -45,7 +45,7 @@ export const AnnotationComponent: React.FC<AnnotationComponentProps> = ({
       <TextField
         fullWidth
         multiline
-        rows={2}
+        rows={4}
         value={annotation.editableText}
         onChange={isEditable ? (e) => onChange?.(e.target.value) : undefined}
         disabled={!isEditable}
