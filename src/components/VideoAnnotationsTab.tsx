@@ -16,7 +16,7 @@ export const VideoAnnotationsTab: React.FC<VideoAnnotationsTabProps> = ({
 }) => (
   // change the fraction of the width
   <Box sx={{ display: "grid", gridTemplateColumns: "0.8fr 1.2fr", gap: 2 }}>
-    <Paper sx={{ p: 2, height: "250px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <Paper elevation={2} sx={{ p: 2, height: "250px", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <Typography color="text.secondary">Video Preview</Typography>
     </Paper>
 

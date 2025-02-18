@@ -22,20 +22,27 @@ export const AnnotationComponent: React.FC<AnnotationComponentProps> = ({
   isEditable,
   label
 }) => (
-  <Paper elevation={2} sx={{ p: 2, transition: "height 0.3s ease" }}>
+  <Paper elevation={2} sx={{
+    transition: "height 0.3s ease",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+    p : 2
+  }}>
     {/* Original Annotation */}
-    <Box display="flex" alignItems="center" justifyContent="space-between">
+    <Box display="flex" alignItems="center" justifyContent="center">
       <Typography variant="subtitle1">{label} {index + 1} (Original)</Typography>
       <IconButton onClick={onToggleOriginal}>
         {annotation.isOriginalCollapsed ? <ExpandMore /> : <ExpandLess />}
       </IconButton>
     </Box>
     {!annotation.isOriginalCollapsed && (
-      <Typography sx={{ mt: 2 }}>{annotation.originalText}</Typography>
+      <Typography sx={{ width: "100%" }}>{annotation.originalText}</Typography>
     )}
 
     {/* Editable Annotation */}
-    <Box display="flex" alignItems="center" justifyContent="space-between" mt={2}>
+    <Box display="flex" alignItems="center" justifyContent="center">
       <Typography variant="subtitle1">{label} {index + 1} (Editable)</Typography>
       <IconButton onClick={onToggleEditable}>
         {annotation.isEditableCollapsed ? <ExpandMore /> : <ExpandLess />}
@@ -49,7 +56,7 @@ export const AnnotationComponent: React.FC<AnnotationComponentProps> = ({
         value={annotation.editableText}
         onChange={isEditable ? (e) => onChange?.(e.target.value) : undefined}
         disabled={!isEditable}
-        sx={{ mt: 2 }}
+        sx={{ width: "100%" }}
       />
     )}
   </Paper>

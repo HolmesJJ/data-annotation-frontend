@@ -8,7 +8,7 @@ import { AnnotationSection } from './types';
 const App: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
   const [promptText, setPromptText] = useState<AnnotationSection[]>([
-    { originalText: "Original annotation text 1", editableText: "Second annotation text 1", isOriginalCollapsed: true, isEditableCollapsed: false },
+    { originalText: "Original prompt text 1", editableText: "Edditable prompt text 1", isOriginalCollapsed: true, isEditableCollapsed: false },
   ]);
 
   const [imageAnnotations, setImageAnnotations] = useState<AnnotationSection[]>([
